@@ -1,4 +1,5 @@
 from pytube import YouTube
+from moviepy.editor import *
 import os
 
 def downloadToPath(url):
@@ -8,8 +9,19 @@ def downloadToPath(url):
     if not os.path.exists(path):
         os.makedirs(path)
     video.download(path)
+    print('downloaded')
+
+def mp4ToMp3():
+    print('changing format to mp3')
+    mp4 = os.listdir('./videos')
+    mp3 = mp4[0].replace('mp4','mp3')
+    FILETOCONVERT = AudioFileClip('./videos/' + mp4[0])
+    FILETOCONVERT.write_audiofile('./videos/' + mp3)
+    FILETOCONVERT.close()
+    os.remove('./videos/' + mp4[0])
 
 if (__name__ == '__main__'):
     url = input('insert the youtube video Url:')
     downloadToPath(url)
-    print('downloaded')
+    mp4ToMp3()
+    
